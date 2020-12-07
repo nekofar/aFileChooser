@@ -49,7 +49,7 @@ publishing {
         gpr(MavenPublication) {
             groupId 'com.ipaulpro' // Replace with group ID
             artifactId 'aFileChooser'
-            version '1.0.1'
+            version '1.0.2'
             artifact("$buildDir/outputs/aar/aFileChooser-release.aar")
         }
     }
