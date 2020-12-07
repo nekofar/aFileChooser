@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.library'
+    id 'maven-publish'
 }
 
 android {
@@ -28,7 +29,28 @@ android {
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
+    compileOnly fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/OWNER/REPOSITORY")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            groupId 'com.ipaulpro' // Replace with group ID
+            artifactId 'aFileChooser'
+            version '1.0.2'
+            artifact("$buildDir/outputs/aar/aFileChooser-release.aar")
+        }
+    }
 }
